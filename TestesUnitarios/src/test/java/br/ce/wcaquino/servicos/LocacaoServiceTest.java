@@ -10,6 +10,7 @@ import java.util.Date;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -24,21 +25,31 @@ import br.ce.wcaquino.utils.DataUtils;
 
 public class LocacaoServiceTest {
 
+	// Variável global
+	private LocacaoService service;
+
 	@Rule
 	public ErrorCollector error = new ErrorCollector();
 
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
+	@Before
+	public void setup() {
+
+		service = new LocacaoService();
+
+	}
+
 	@Test
 	public void testeLocacao() throws Exception {
 
 		// Cenário
-		LocacaoService service = new LocacaoService();
 		Usuario usuario = new Usuario("Usuario 1");
 		Filme filme = new Filme("Filme 1", 2, 5.0);
 
 		// Ação
+		service.alugarFilme(usuario, filme);
 		Locacao locacao = service.alugarFilme(usuario, filme);
 
 		// Verificação
@@ -53,7 +64,7 @@ public class LocacaoServiceTest {
 	public void testLocacao_filmeSemEstoque() throws Exception {
 
 		// Cenário
-		LocacaoService service = new LocacaoService();
+
 		Usuario usuario = new Usuario("Usuario 1");
 		Filme filme = new Filme("Filme 1", 0, 5.0);
 
@@ -67,7 +78,7 @@ public class LocacaoServiceTest {
 	public void testLocacao_usuarioVazio() throws FilmeSemEstoqueException {
 
 		// Cenário
-		LocacaoService service = new LocacaoService();
+
 		Filme filme = new Filme("Filme 2", 1, 4.0);
 
 		// Ação
@@ -80,8 +91,8 @@ public class LocacaoServiceTest {
 
 			assertThat(e.getMessage(), is("Usuário vazio"));
 		}
-		
-		System.out.println("Forma robusta");
+
+		// System.out.println("Forma robusta");
 
 	}
 
@@ -90,17 +101,17 @@ public class LocacaoServiceTest {
 	public void testLocacao_FilmeVazio() throws FilmeSemEstoqueException, LocadoraException {
 
 		// Cenário
-		LocacaoService service = new LocacaoService();
+
 		Usuario usuario = new Usuario("Usuario 1");
 
 		exception.expect(LocadoraException.class);
 		exception.expectMessage("Filme vazio");
-		
+
 		// Ação
 		service.alugarFilme(usuario, null);
-		
+
 		System.out.println("Forma nova");
-		
+
 	}
 
 }

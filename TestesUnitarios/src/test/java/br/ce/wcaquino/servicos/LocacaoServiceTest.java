@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -179,6 +180,21 @@ public class LocacaoServiceTest {
 		
 		//Verificação
 		assertThat(resultado.getValor(), is(14.0));
+	}
+	
+	@Test
+	public void deveDevolverNaSegundaAoAlugarNoSabado() throws FilmeSemEstoqueException, LocadoraException {
+		
+		//Cenário
+		Usuario usuario = new Usuario("Usuario 1");
+		List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 1, 5.0));
+		
+		//Ação
+		Locacao  retorno = service.alugarFilme(usuario, filmes);
+		
+		//Verificação
+		boolean enSegunda = DataUtils.verificarDiaSemana(retorno.getDataRetorno(), Calendar.MONDAY);
+		Assert.assertTrue(enSegunda);
 	}
 
 }

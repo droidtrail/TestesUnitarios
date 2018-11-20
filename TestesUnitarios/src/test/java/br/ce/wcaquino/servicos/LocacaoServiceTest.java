@@ -128,11 +128,11 @@ public class LocacaoServiceTest {
 		Locacao retorno = service.alugarFilme(usuario, filmes);
 
 		// Verificação
-		
-		//Simulação de erro
-		//assertThat(retorno.getDataRetorno(),caiEm(Calendar.SUNDAY));
-		assertThat(retorno.getDataRetorno(),caiNumaSegunda());
-		
+
+		// Simulação de erro
+		// assertThat(retorno.getDataRetorno(),caiEm(Calendar.SUNDAY));
+		assertThat(retorno.getDataRetorno(), caiNumaSegunda());
+
 	}
 
 }
